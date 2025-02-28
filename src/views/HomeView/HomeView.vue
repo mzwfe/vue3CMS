@@ -58,6 +58,7 @@ function handleFoldChange(flag: boolean) {
 
   .content-main {
     background-color: #f2f3f4;
+    height: calc(100% - 50px);
   }
 }
 </style>

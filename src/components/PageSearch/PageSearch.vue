@@ -87,6 +87,8 @@ function handleSearchClick() {
 .search-form {
   background-color: #fff;
   padding: 20px;
+  box-sizing: border-box;
+  height: 20vh;
 }
 
 .el-form-item {
@@ -96,6 +98,6 @@ function handleSearchClick() {
 
 .btns {
   text-align: right;
-  padding: 5px 20px;
+  padding: 0 6vw;
 }
 </style>

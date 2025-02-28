@@ -70,15 +70,18 @@ function handleSearchClick() {
             />
           </el-form-item>
         </el-col>
+        <el-col :span="8">
+          <el-form-item label="操作">
+            <div class="btns">
+              <el-button size="large" icon="Refresh" @click="hadleResetClick">重置</el-button>
+              <el-button size="large" type="primary" icon="Search" @click="handleSearchClick"
+                >查询</el-button
+              >
+            </div>
+          </el-form-item>
+        </el-col>
       </el-row>
     </el-form>
-    <!-- 2.搜索按钮 -->
-    <div class="btns">
-      <el-button size="large" icon="Refresh" @click="hadleResetClick">重置</el-button>
-      <el-button size="large" type="primary" icon="Search" @click="handleSearchClick"
-        >查询</el-button
-      >
-    </div>
   </div>
 </template>
 
@@ -86,15 +89,17 @@ function handleSearchClick() {
 .search-form {
   background-color: #fff;
   padding: 20px;
+  height: 20vh;
+  box-sizing: border-box;
 }
 
 .el-form-item {
-  padding: 20px;
+  padding: 10px 20px;
   margin-bottom: 0;
 }
 
 .btns {
-  text-align: right;
+  text-align: justify;
   padding: 5px 20px;
 }
 </style>

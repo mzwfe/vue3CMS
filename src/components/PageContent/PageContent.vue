@@ -195,8 +195,14 @@ defineExpose({ fetchPageList })
 }
 
 .table {
+  height: 50vh;
+
   :deep(.el-table__cell) {
     padding: 12px 0 !important;
+  }
+
+  :deep(.el-table--fit) {
+    height: 50vh;
   }
 
   :deep(.el-button) {
@@ -208,7 +214,7 @@ defineExpose({ fetchPageList })
 .pagination {
   display: flex;
   justify-content: center;
-  margin-top: 10px;
+  margin-top: 20px;
 }
 
 // 设置时间折叠样式
