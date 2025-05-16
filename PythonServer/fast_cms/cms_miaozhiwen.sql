@@ -11,13 +11,11 @@
  Target Server Version : 80025 (8.0.25)
  File Encoding         : 65001
 
- Date: 16/05/2025 15:37:22
+ Date: 16/05/2025 21:50:53
 */
 
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
-
-create database `cms_miaozhiwen`;
 
 -- ----------------------------
 -- Table structure for categories
@@ -330,11 +328,13 @@ CREATE TABLE `users`  (
   `updateAt` datetime NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE,
   UNIQUE INDEX `uk_user_name`(`name` ASC) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '用户表' ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci COMMENT = '用户表' ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of users
 -- ----------------------------
-INSERT INTO `users` VALUES (1, 'coderwhy', 'hashed_password_placeholder_for_123456', 'coderwhy', '18812345678', 1, 1, 1, '2021-01-02 10:20:26', '2021-01-03 04:50:13');
+INSERT INTO `users` VALUES (1, 'coderwhy', '$2b$12$QFPFjS.0x/aMutx6KJgV.emrWfpGddKZNuwlpwre6I0P6AiA4cE/a', 'coderwhy', '18812345678', 1, 1, 1, '2021-01-02 10:20:26', '2025-05-16 18:25:21');
+INSERT INTO `users` VALUES (2, '123', '$2b$12$PERNSbKtexUCnDc5nDe2buqoT8eW./4CXpWatnrMB./YkVnKXzlVu', '123', '13811111111', 1, 4, 2, '2025-05-16 18:45:14', '2025-05-16 18:45:14');
+INSERT INTO `users` VALUES (3, 'miaozhiwen', '$2b$12$uOBFH6qVUDNdSKrEh66Ibe1vNGbrMGLTkQ3M8wBYnpGCxuXZhkfP2', 'Miaozhiwen', '13811111111', 1, 3, 2, '2025-05-16 18:46:38', '2025-05-16 18:46:38');
 
 SET FOREIGN_KEY_CHECKS = 1;
