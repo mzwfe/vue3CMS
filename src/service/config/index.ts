@@ -8,10 +8,10 @@
 let BASE_URL = ''
 if (import.meta.env.DEV) {
   // 设置开发环境url
-  BASE_URL = 'http://127.0.0.1:5000/api'
+  BASE_URL = '/api'
 } else if (import.meta.env.PROD) {
   // 设置生产环境url
-  BASE_URL = 'http://127.0.0.1:5000/api'
+  BASE_URL = '/api'
 }
 
 const TIME_OUT = 5000
