@@ -17,7 +17,7 @@
 SET NAMES utf8mb4;
 SET FOREIGN_KEY_CHECKS = 0;
 
-create database `cms_vue`;
+create database `cms_miaozhiwen`;
 
 -- ----------------------------
 -- Table structure for categories
