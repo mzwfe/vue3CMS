@@ -1,0 +1,10 @@
+Flask
+Flask-SQLAlchemy
+mysql-connector-python
+PyJWT
+Werkzeug
+python-dotenv
+Flask-Cors
+bcrypt
+
+# pip install -r requirements.txt -i https://mirrors.aliyun.com/pypi/simple/
