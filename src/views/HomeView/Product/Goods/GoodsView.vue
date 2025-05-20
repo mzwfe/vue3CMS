@@ -30,6 +30,9 @@ const { modalRef, handleNewClick, handleEditClick } = usePageModal()
       @new-click="handleNewClick"
       @edit-click="handleEditClick"
     >
+      <template #status="scope">
+        <span>{{ scope.row.status === 1 ? '上架' : '下架' }}</span>
+      </template>
       <template #name="scope">
         <span class="fold">{{ scope.row.name }}</span>
       </template>

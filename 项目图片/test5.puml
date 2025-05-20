@@ -1,0 +1,39 @@
+@startuml UserModuleUseCase
+
+actor "普通用户" as NormalUser
+' 设置布局方向
+left to right direction
+
+package "用户模块" {
+    (用户登录) as UserLogin
+    (首页) as ResourceLibrary
+    (商品管理) as FolderManagement
+    (你的故事) as RecycleBin
+
+    (数据展示) as FileDownload
+    (技术展示) as FilePreview
+
+    (商品分类管理) as ModifyFolder
+    (商品信息管理) as DeleteFolder
+
+    (撰写故事) as FileRecovery
+    (故事列表) as FileDeletion
+}
+
+
+NormalUser -- UserLogin
+NormalUser -- ResourceLibrary
+NormalUser -- FolderManagement
+NormalUser -- RecycleBin
+
+ResourceLibrary --> FileDownload : include
+ResourceLibrary --> FilePreview : include
+
+FolderManagement --> ModifyFolder : include
+FolderManagement --> DeleteFolder : include
+
+RecycleBin --> FileRecovery : include
+RecycleBin --> FileDeletion : include
+
+
+@enduml

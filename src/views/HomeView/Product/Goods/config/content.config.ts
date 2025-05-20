@@ -18,7 +18,7 @@ const contentConfig = {
     { type: 'custom', label: '原价', prop: 'oldPrice', width: '80px', slotName: 'oldPrice' },
     { type: 'custom', label: '现价', prop: 'newPrice', width: '80px', slotName: 'newPrice' },
     { type: 'custom', label: '描述', prop: 'desc', slotName: 'desc', width: '100px' },
-    { type: 'normal', label: '状态', prop: 'status', width: '100px' },
+    { type: 'custom', label: '状态', prop: 'status', width: '100px', slotName: 'status' },
     { type: 'custom', label: '商品图片', prop: 'imgUrl', slotName: 'imgUrl', width: '120px' },
     { type: 'normal', label: '库存', prop: 'inventoryCount', width: '100px' },
     { type: 'normal', label: '销量', prop: 'saleCount', width: '100px' },

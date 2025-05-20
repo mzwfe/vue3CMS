@@ -1,0 +1,55 @@
+@startuml ProductManagementSequence
+
+actor "用户" as User
+participant "Vue3 Frontend" as Frontend
+participant "Python Backend" as Backend
+database "MySQL Database" as Database
+
+box "商品管理模块 - CRUD"
+    User -> Frontend: 访问商品管理页面
+    Frontend -> Backend: GET /products (查询商品列表)
+    activate Backend
+    Backend -> Database: SELECT * FROM products (...)
+    activate Database
+    Database --> Backend: 返回商品数据
+    deactivate Database
+    Backend --> Frontend: 返回商品列表数据
+    deactivate Backend
+    Frontend -> User: 显示商品列表
+
+    User -> Frontend: 点击"添加商品" / 提交新商品表单
+    Frontend -> Backend: POST /products {product data} (添加商品)
+    activate Backend
+    Backend -> Database: INSERT INTO products (...) VALUES (...)
+    activate Database
+    Database --> Backend: 返回操作结果
+    deactivate Database
+    Backend --> Frontend: 返回添加成功/失败信息
+    deactivate Backend
+    Frontend -> User: 显示添加结果/更新列表
+
+    User -> Frontend: 选择商品 / 点击"修改" / 提交修改表单
+    Frontend -> Backend: PUT /products/{id} {updated product data} (修改商品)
+    activate Backend
+    Backend -> Database: UPDATE products SET ... WHERE id = {id}
+    activate Database
+    Database --> Backend: 返回操作结果
+    deactivate Database
+    Backend --> Frontend: 返回修改成功/失败信息
+    deactivate Backend
+    Frontend -> User: 显示修改结果/更新列表
+
+    User -> Frontend: 选择商品 / 点击"删除"
+    Frontend -> Backend: DELETE /products/{id} (删除商品)
+    activate Backend
+    Backend -> Database: DELETE FROM products WHERE id = {id}
+    activate Database
+    Database --> Backend: 返回操作结果
+    deactivate Database
+    Backend --> Frontend: 返回删除成功/失败信息
+    deactivate Backend
+    Frontend -> User: 显示删除结果/更新列表
+
+end box
+
+@enduml

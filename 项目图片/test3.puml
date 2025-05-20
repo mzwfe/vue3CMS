@@ -1,0 +1,95 @@
+@startuml Admin Module Use Case
+
+' 设置标题
+title 管理员模块用例图
+
+' 设置布局方向
+left to right direction
+
+' 定义角色
+actor "超级管理员" as SuperAdmin
+actor "普通管理员" as NormalAdmin
+
+' 定义用例包
+rectangle "管理员模块" {
+    ' 用户管理用例
+    usecase "用户管理" as UC1
+    usecase "创建用户" as UC1_1
+    usecase "删除用户" as UC1_2
+    usecase "修改用户" as UC1_3
+    usecase "查询用户" as UC1_4
+
+    ' 角色管理用例
+    usecase "角色管理" as UC2
+    usecase "创建角色" as UC2_1
+    usecase "删除角色" as UC2_2
+    usecase "修改角色" as UC2_3
+    usecase "查询角色" as UC2_4
+    usecase "分配权限" as UC2_5
+
+    ' 部门管理用例
+    usecase "部门管理" as UC3
+    usecase "创建部门" as UC3_1
+    usecase "删除部门" as UC3_2
+    usecase "修改部门" as UC3_3
+    usecase "查询部门" as UC3_4
+
+    ' 菜单管理用例
+    usecase "菜单管理" as UC4
+    usecase "创建菜单" as UC4_1
+    usecase "删除菜单" as UC4_2
+    usecase "修改菜单" as UC4_3
+    usecase "查询菜单" as UC4_4
+}
+
+' 定义关系
+SuperAdmin --> UC1
+SuperAdmin --> UC2
+SuperAdmin --> UC3
+SuperAdmin --> UC4
+
+NormalAdmin --> UC1_4
+NormalAdmin --> UC2_4
+NormalAdmin --> UC3_4
+NormalAdmin --> UC4_4
+
+' 定义包含关系
+UC1 ..> UC1_1 : <<include>>
+UC1 ..> UC1_2 : <<include>>
+UC1 ..> UC1_3 : <<include>>
+UC1 ..> UC1_4 : <<include>>
+
+UC2 ..> UC2_1 : <<include>>
+UC2 ..> UC2_2 : <<include>>
+UC2 ..> UC2_3 : <<include>>
+UC2 ..> UC2_4 : <<include>>
+UC2 ..> UC2_5 : <<include>>
+
+UC3 ..> UC3_1 : <<include>>
+UC3 ..> UC3_2 : <<include>>
+UC3 ..> UC3_3 : <<include>>
+UC3 ..> UC3_4 : <<include>>
+
+UC4 ..> UC4_1 : <<include>>
+UC4 ..> UC4_2 : <<include>>
+UC4 ..> UC4_3 : <<include>>
+UC4 ..> UC4_4 : <<include>>
+
+' 添加注释
+note right of SuperAdmin
+  超级管理员可以：
+  - 管理所有用户
+  - 管理所有角色
+  - 管理所有部门
+  - 管理所有菜单
+end note
+
+note right of NormalAdmin
+  普通管理员可以：
+  - 查询用户信息
+  - 查询角色信息
+  - 查询部门信息
+  - 查询菜单信息
+end note
+
+@enduml

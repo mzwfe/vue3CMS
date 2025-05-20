@@ -1,0 +1,103 @@
+@startuml CMS Database ER Diagram
+
+' 实体定义
+entity "users" as users {
+  * id : INT <<PK>>
+  --
+  * name : VARCHAR(255) <<unique>>
+  * password : VARCHAR(255)
+  realname : VARCHAR(255)
+  cellphone : VARCHAR(20)
+  enable : TINYINT(1)
+  role_id : INT <<FK>>
+  department_id : INT <<FK>>
+  createAt : DATETIME
+  updateAt : DATETIME
+}
+
+entity "roles" as roles {
+  * id : INT <<PK>>
+  --
+  * name : VARCHAR(255) <<unique>>
+  intro : VARCHAR(255)
+  createAt : DATETIME
+  updateAt : DATETIME
+}
+
+entity "departments" as departments {
+  * id : INT <<PK>>
+  --
+  * name : VARCHAR(255)
+  parentId : INT <<FK>>
+  leader : VARCHAR(255)
+  createAt : DATETIME
+  updateAt : DATETIME
+}
+
+entity "menus" as menus {
+  * id : INT <<PK>>
+  --
+  * name : VARCHAR(255)
+  * type : INT
+  url : VARCHAR(255)
+  icon : VARCHAR(255)
+  sort : INT
+  permission : VARCHAR(255) <<unique>>
+  parentId : INT <<FK>>
+  createAt : DATETIME
+  updateAt : DATETIME
+}
+
+entity "role_menu" as role_menu {
+  * role_id : INT <<PK, FK>>
+  * menu_id : INT <<PK, FK>>
+  --
+  createAt : DATETIME
+}
+
+entity "categories" as categories {
+  * id : INT <<PK>>
+  --
+  * name : VARCHAR(255) <<unique>>
+  createAt : DATETIME
+  updateAt : DATETIME
+}
+
+entity "products" as products {
+  * id : INT <<PK>>
+  --
+  * name : VARCHAR(255)
+  oldPrice : VARCHAR(255)
+  newPrice : VARCHAR(255)
+  desc : TEXT
+  status : INT
+  imgUrl : VARCHAR(1024)
+  inventoryCount : INT
+  saleCount : INT
+  favorCount : INT
+  address : VARCHAR(255)
+  categoryId : INT <<FK>>
+  createAt : DATETIME
+  updateAt : DATETIME
+}
+
+entity "stories" as stories {
+  * id : INT <<PK>>
+  --
+  * title : VARCHAR(1024)
+  * content : TEXT
+  user_id : INT <<FK>>
+  createAt : DATETIME
+}
+
+' 关系定义
+users ||--o{ stories : "creates"
+users }o--|| roles : "has"
+users }o--|| departments : "belongs to"
+roles ||--o{ role_menu : "has"
+menus ||--o{ role_menu : "has"
+categories ||--o{ products : "contains"
+menus ||--o{ menus : "parent of"
+departments ||--o{ departments : "parent of"
+
+@enduml

@@ -1,0 +1,49 @@
+@startuml CrossDatabaseDAOArchitecture
+
+package "应用层 (Business Logic)" as AppLayer {
+  [服务 Service A] --> [DAO Interface X] : uses
+  [服务 Service B] --> [DAO Interface Y] : uses
+  ' ... 其他服务
+}
+
+package "数据访问层 (DAO Layer)" as DAOLayer {
+
+  interface "DAOInterfaceX" as InterfaceX {
+    + findById(id)
+    + save(entity)
+    + update(entity)
+    + delete(entity)
+    ' ... 其他通用数据操作
+  }
+
+  interface "DAO Interface Y" as InterfaceY {
+     + findByName(name)
+     ' ... 特定于Y实体的操作
+  }
+
+  package "数据库实现 (Database Implementations)" as Implementations {
+    class "MySQL DAO Impl X" as MySQLImplX
+    class "PostgreSQL DAO Impl Y" as PostgreSQLImplY
+    class "OtherDB DAO Impl Z" as OtherDBImplZ
+    ' ... 其他数据库的DAO实现
+  }
+
+   ' 实现关系
+  InterfaceX <|.. MySQLImplX
+  InterfaceY <|.. PostgreSQLImplY
+  ' InterfaceZ <|.. OtherDBImplZ ' 如果有 InterfaceZ 的话
+
+  ' DAO实现依赖于具体数据库
+  MySQLImplX --> [MySQL Database]
+  PostgreSQLImplY --> [PostgreSQL Database]
+  ' OtherDBImplZ --> [Other Database]
+}
+
+database "MySQL Database" as MySQLDB
+database "PostgreSQL Database" as PostgreSQLDB
+' database "Other Database" as OtherDB
+
+' 应用层使用DAO接口
+AppLayer --> DAOLayer : depends on
+
+@enduml

@@ -1,0 +1,32 @@
+@startuml UserLoginSequence
+
+actor "用户" as User
+participant "Vue3 Frontend" as Frontend
+participant "Python Backend" as Backend
+database "MySQL Database" as Database
+
+User -> Frontend: 输入用户名和密码
+Frontend -> Backend: POST /login {username, password}
+activate Backend
+
+Backend -> Database: 查询用户 (SELECT * FROM users WHERE name = ...)
+activate Database
+Database --> Backend: 返回用户数据
+deactivate Database
+
+Backend -> Backend: 验证密码
+
+alt 密码正确
+    Backend -> Database: 查询用户角色和菜单权限 (SELECT roles.*, menus.* FROM ...)
+    activate Database
+    Database --> Backend: 返回角色和菜单数据
+    deactivate Database
+    Backend --> Frontend: 返回登录成功响应 (包含 token, 用户信息, 菜单权限)
+else 密码错误或用户不存在
+    Backend --> Frontend: 返回错误响应 (如: "用户名或密码错误")
+end
+
+deactivate Backend
+Frontend -> Frontend: 处理响应 (存储 token, 导航到主页或显示错误信息)
+
+@enduml

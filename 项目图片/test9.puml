@@ -1,0 +1,95 @@
+@startuml RoleManagementSequence
+
+actor "用户" as User
+participant "Vue3 Frontend" as Frontend
+participant "Python Backend" as Backend
+database "MySQL Database" as Database
+
+== 角色列表 (Read) ==
+User -> Frontend: 请求角色列表页面
+Frontend -> Backend: GET /roles
+activate Backend
+Backend -> Database: SELECT * FROM roles
+activate Database
+Database --> Backend: 返回角色列表数据
+deactivate Database
+Backend --> Frontend: 返回角色列表数据
+deactivate Backend
+Frontend --> User: 显示角色列表
+
+== 获取单个角色信息及权限 (Read One) ==
+User -> Frontend: 选择一个角色，查看/编辑详情
+Frontend -> Backend: GET /roles/{roleId}
+activate Backend
+Backend -> Database: SELECT * FROM roles WHERE id = {roleId}
+activate Database
+Database --> Backend: 返回角色数据
+deactivate Database
+Backend -> Database: SELECT menu_id FROM role_menu WHERE role_id = {roleId}
+activate Database
+Database --> Backend: 返回角色关联的菜单ID列表
+deactivate Database
+Backend --> Frontend: 返回角色数据和菜单ID列表
+deactivate Backend
+Frontend --> User: 显示角色详情及已分配权限
+
+== 创建角色 (Create) ==
+User -> Frontend: 点击“新建角色”，填写信息，选择菜单权限
+Frontend -> Backend: POST /roles {name, intro, menuIds}
+activate Backend
+Backend -> Backend: 验证输入数据
+Backend -> Database: INSERT INTO roles (name, intro) VALUES (...)
+activate Database
+Database --> Backend: 返回新角色ID
+deactivate Database
+opt 如果选择了菜单权限
+    Backend -> Database: INSERT INTO role_menu (role_id, menu_id) VALUES (...) (批量或逐条)
+    activate Database
+    Database --> Backend: 插入成功
+    deactivate Database
+end
+Backend --> Frontend: 返回创建成功响应
+deactivate Backend
+Frontend --> User: 显示创建成功消息，刷新列表
+
+== 修改角色 (Update) ==
+User -> Frontend: 修改角色信息或菜单权限，点击“保存”
+Frontend -> Backend: PUT /roles/{roleId} {name, intro, menuIds}
+activate Backend
+Backend -> Backend: 验证输入数据
+Backend -> Database: UPDATE roles SET name = ..., intro = ... WHERE id = {roleId}
+activate Database
+Database --> Backend: 更新成功
+deactivate Database
+Backend -> Database: DELETE FROM role_menu WHERE role_id = {roleId}
+activate Database
+Database --> Backend: 删除旧关联成功
+deactivate Database
+opt 如果选择了新的菜单权限
+    Backend -> Database: INSERT INTO role_menu (role_id, menu_id) VALUES (...) (批量或逐条)
+    activate Database
+    Database --> Backend: 插入新关联成功
+    deactivate Database
+end
+Backend --> Frontend: 返回更新成功响应
+deactivate Backend
+Frontend --> User: 显示修改成功消息，刷新列表/详情
+
+== 删除角色 (Delete) ==
+User -> Frontend: 选择一个角色，点击“删除”
+Frontend -> Backend: DELETE /roles/{roleId}
+activate Backend
+Backend -> Backend: 验证删除权限
+Backend -> Database: DELETE FROM role_menu WHERE role_id = {roleId}
+activate Database
+Database --> Backend: 删除关联成功
+deactivate Database
+Backend -> Database: DELETE FROM roles WHERE id = {roleId}
+activate Database
+Database --> Backend: 删除角色成功
+deactivate Database
+Backend --> Frontend: 返回删除成功响应
+deactivate Backend
+Frontend --> User: 显示删除成功消息，刷新列表
+
+@enduml

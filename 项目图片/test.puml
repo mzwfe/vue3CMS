@@ -1,0 +1,94 @@
+@startuml CMS System
+
+' 实体类定义
+class User {
+  +id: int
+  +name: string
+  +password: string
+  +realname: string
+  +cellphone: string
+  +enable: boolean
+  +role_id: int
+  +department_id: int
+  +createAt: datetime
+  +updateAt: datetime
+}
+
+class Role {
+  +id: int
+  +name: string
+  +intro: string
+  +createAt: datetime
+  +updateAt: datetime
+}
+
+class Department {
+  +id: int
+  +name: string
+  +parentId: int
+  +leader: string
+  +createAt: datetime
+  +updateAt: datetime
+}
+
+class Menu {
+  +id: int
+  +name: string
+  +type: int
+  +url: string
+  +icon: string
+  +sort: int
+  +permission: string
+  +parentId: int
+  +createAt: datetime
+  +updateAt: datetime
+}
+
+class Product {
+  +id: int
+  +name: string
+  +oldPrice: string
+  +newPrice: string
+  +desc: text
+  +status: int
+  +imgUrl: string
+  +inventoryCount: int
+  +saleCount: int
+  +favorCount: int
+  +address: string
+  +categoryId: int
+  +createAt: datetime
+  +updateAt: datetime
+}
+
+class Category {
+  +id: int
+  +name: string
+  +createAt: datetime
+  +updateAt: datetime
+}
+
+class Story {
+  +id: int
+  +title: string
+  +content: text
+  +user_id: int
+  +createAt: datetime
+}
+
+class RoleMenu {
+  +role_id: int
+  +menu_id: int
+  +createAt: datetime
+}
+
+' 关系定义
+User "1" -- "1" Role : has
+User "1" -- "1" Department : belongs to
+Role "1" -- "*" Menu : has
+Department "1" -- "*" Department : has parent
+Product "1" -- "1" Category : belongs to
+Story "1" -- "1" User : created by
+Menu "1" -- "*" Menu : has parent
+
+@enduml

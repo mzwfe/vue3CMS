@@ -24,12 +24,19 @@ const useLoginStore = defineStore('login', {
   actions: {
     async accountLoginAction(account: IAccount) {
       // 1.登陆账号, 获取token
-      const loginRes: any = await accountLogin(account)
-      const id = loginRes.data.id
-      const name = loginRes.data.name
-      this.token = loginRes.data.token
-      // 此处先存储token, 否则下文无法获取token
-      localCache.setCache(LOGIN_TOKEN, this.token)
+      let id
+      let name
+      try {
+        const loginRes: any = await accountLogin(account)
+        id = loginRes.data.id
+        name = loginRes.data.name
+        this.token = loginRes.data.token
+        // 此处先存储token, 否则下文无法获取token
+        localCache.setCache(LOGIN_TOKEN, this.token)
+        ElMessage.success('登陆成功')
+      } catch (error) {
+        ElMessage.error('登陆失败')
+      }
 
       // 2.获取用户详细信息
       const userInfoRes: any = await getUserInfoById(id)

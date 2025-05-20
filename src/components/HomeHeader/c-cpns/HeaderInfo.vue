@@ -8,6 +8,7 @@ function logout() {
   localCache.deleteCache('userInfo')
   localCache.deleteCache('userMenus')
   router.push('/login')
+  ElMessage.success('返回登录页')
 }
 </script>
 

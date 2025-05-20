@@ -1,0 +1,19 @@
+@startuml FunctionalStructure
+
+rectangle "管理员" as Administrator
+
+rectangle "用户管理" as UserManager
+rectangle "角色管理" as AdminManager
+rectangle "菜单管理" as ResourceManager
+rectangle "商品类别管理" as RecycleBin
+rectangle "商品信息管理" as RecycleBin2
+rectangle "你的故事" as SpaceManager
+
+Administrator --> UserManager
+Administrator --> AdminManager
+Administrator --> ResourceManager
+Administrator --> RecycleBin
+Administrator --> RecycleBin2
+Administrator --> SpaceManager
+
+@enduml

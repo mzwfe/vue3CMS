@@ -11,8 +11,8 @@ const contentConfig = {
     { label: '排序', prop: 'sort', width: '120px' },
     { label: '权限', prop: 'permission', width: '120px' },
     { label: '创建时间', prop: 'createAt' },
-    { label: '更新时间', prop: 'updateAt' },
-    { type: 'handler', label: '操作', width: '150px' }
+    { label: '更新时间', prop: 'updateAt' }
+    // { type: 'handler', label: '操作', width: '150px' }
   ],
   childrenTree: {
     rowKey: 'id'

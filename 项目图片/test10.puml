@@ -1,0 +1,94 @@
+@startuml UserManagementSequence
+
+actor "管理员" as Admin
+participant "Vue3 Frontend" as Frontend
+participant "Python Backend\n(User API)" as Backend
+database "MySQL Database\n(users table)" as Database
+
+box "用户管理"
+Admin -> Frontend: 请求用户管理界面
+Frontend -> Backend: GET /users (获取用户列表)
+activate Backend
+Backend -> Database: SELECT * FROM users
+activate Database
+Database --> Backend: 返回用户列表数据
+deactivate Database
+Backend --> Frontend: 返回用户列表响应
+deactivate Backend
+Frontend -> Admin: 显示用户列表
+
+Admin -> Frontend: (创建用户) 点击“添加用户” / 填写表单
+Frontend -> Backend: POST /users {user data}
+activate Backend
+Backend -> Backend: 验证数据
+Backend -> Database: INSERT INTO users (...) VALUES (...)
+activate Database
+alt 插入成功
+  Database --> Backend: 返回成功
+  deactivate Database
+  Backend --> Frontend: 返回创建成功响应
+else 插入失败 (如用户名已存在)
+  Database --> Backend: 返回错误
+  deactivate Database
+  Backend --> Frontend: 返回创建失败响应 (错误信息)
+end
+deactivate Backend
+Frontend -> Admin: 显示创建结果 / 更新列表
+
+Admin -> Frontend: (读取用户详情) 点击用户条目
+Frontend -> Backend: GET /users/{userId}
+activate Backend
+Backend -> Database: SELECT * FROM users WHERE id = {userId}
+activate Database
+alt 用户存在
+  Database --> Backend: 返回用户详情数据
+  deactivate Database
+  Backend --> Frontend: 返回用户详情响应
+else 用户不存在
+  Database --> Backend: 返回空结果
+  deactivate Database
+  Backend --> Frontend: 返回错误或空响应
+end
+deactivate Backend
+Frontend -> Admin: 显示用户详情
+
+Admin -> Frontend: (更新用户) 修改用户详情并保存
+Frontend -> Backend: PUT /users/{userId} {updated user data}
+activate Backend
+Backend -> Backend: 验证数据和权限
+Backend -> Database: UPDATE users SET ... WHERE id = {userId}
+activate Database
+alt 更新成功
+  Database --> Backend: 返回成功
+  deactivate Database
+  Backend --> Frontend: 返回更新成功响应
+else 更新失败 (如数据无效或无权限)
+  Database --> Backend: 返回错误
+  deactivate Database
+  Backend --> Frontend: 返回更新失败响应 (错误信息)
+end
+deactivate Backend
+Frontend -> Admin: 显示更新结果 / 更新列表/详情
+
+Admin -> Frontend: (删除用户) 点击删除按钮
+Frontend -> Frontend: 显示确认对话框
+Admin -> Frontend: 确认删除
+Frontend -> Backend: DELETE /users/{userId}
+activate Backend
+Backend -> Backend: 检查权限 / 验证用户ID
+Backend -> Database: DELETE FROM users WHERE id = {userId}
+activate Database
+alt 删除成功
+  Database --> Backend: 返回成功
+  deactivate Database
+  Backend --> Frontend: 返回删除成功响应
+else 删除失败 (如用户不存在或有关联数据)
+  Database --> Backend: 返回错误
+  deactivate Database
+  Backend --> Frontend: 返回删除失败响应 (错误信息)
+end
+deactivate Backend
+Frontend -> Admin: 显示删除结果 / 从列表中移除用户
+end box
+
+@enduml

@@ -29,3 +29,10 @@ export function getGoodsAddressCount() {
     url: '/goods/address/sale'
   })
 }
+
+export function createStory(data: any) {
+  return zwRequest2.post({
+    url: '/story',
+    data
+  })
+}

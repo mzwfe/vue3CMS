@@ -3,6 +3,7 @@ import '@wangeditor/editor/dist/css/style.css' // 引入 css
 
 import { onBeforeUnmount, ref, shallowRef } from 'vue'
 import { Editor, Toolbar } from '@wangeditor/editor-for-vue'
+import { createStory } from '@/service/home/analysis/analysis'
 // 编辑器实例，必须用 shallowRef
 const editorRef = shallowRef()
 
@@ -19,12 +20,29 @@ onBeforeUnmount(() => {
   editor.destroy()
 })
 
-const handleCreated = (editor) => {
+const handleCreated = (editor: any) => {
   editorRef.value = editor // 记录 editor 实例，重要！
 }
 
 function sendText() {
-  console.log('sendddd')
+  createStory(extractChineseText(valueHtml.value))
+}
+
+function extractChineseText(htmlString: string): { title: string; content: string } {
+  // 使用 DOMParser 解析传入的 HTML 字符串
+  const parser = new DOMParser()
+  const doc = parser.parseFromString(htmlString, 'text/html')
+
+  // 提取所有 <p> 标签的文本内容
+  const paragraphs = Array.from(doc.querySelectorAll('p')).map((p) => p.textContent || '')
+
+  // 假设第一个 <p> 是标题 "我的奋斗"
+  const title = paragraphs[0] || ''
+
+  // 其余的 <p> 标签为内容部分
+  const content = paragraphs.slice(1).join('\n')
+
+  return { title, content }
 }
 </script>
 

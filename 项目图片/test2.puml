@@ -1,0 +1,23 @@
+@startuml CMS Database ER Diagram
+
+' 实体定义
+entity "users" as users
+entity "roles" as roles
+entity "departments" as departments
+entity "menus" as menus
+entity "role_menu" as role_menu
+entity "categories" as categories
+entity "products" as products
+entity "stories" as stories
+
+' 关系定义
+users ||--o{ stories : "creates"
+users }o--|| roles : "has"
+users }o--|| departments : "belongs to"
+roles ||--o{ role_menu : "has"
+menus ||--o{ role_menu : "has"
+categories ||--o{ products : "contains"
+menus ||--o{ menus : "parent of"
+departments ||--o{ departments : "parent of"
+
+@enduml
